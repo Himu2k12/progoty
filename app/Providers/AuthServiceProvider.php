@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\StaffInfo;
+use App\StaffInformation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -23,6 +26,19 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        if (Auth::check()) {
+            //$view->with('currentUser', Auth::user());
+            $uid= Auth::user();
+            $ProfilePhotos = StaffInfo::where('user_id',$uid->id)->first();
+            if (!$ProfilePhotos==null){
+                $sp = $ProfilePhotos->staff_photo;
+                View::Share('dp',$sp);
+            }else{
+                View::Share('dp',null);
+            }
+        }
+
         $this->registerPolicies();
 
         Gate::define('isSuper',function ($user){
@@ -41,6 +57,20 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('isSupervisor',function ($user){
             if($user->role==2 && $user->access==1){
+                return true;
+            }else{
+                return false;
+            }
+        });
+        Gate::define('isCashier',function ($user){
+            if($user->role==4 && $user->access==1){
+                return true;
+            }else{
+                return false;
+            }
+        });
+        Gate::define('isIT',function ($user){
+            if($user->role==5 && $user->access==1){
                 return true;
             }else{
                 return false;

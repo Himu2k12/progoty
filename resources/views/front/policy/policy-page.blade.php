@@ -26,12 +26,12 @@
                 </div><!-- .col -->
 
                 <div class="col-12 col-lg-6 order-1 order-lg-2">
-                    <img src="{{asset('asset/')}}/images/sonchoy.jpg" width="100%" alt="welcome">
+                    <img src="{{asset('asset/')}}/images/policy.jpg" width="100%" alt="welcome">
                 </div><!-- .col -->
             </div>
             <!-- .row -->
         <div class="row" style="padding-top: 30px">
-            <table class="table table-striped">
+            <table class="table table-striped table-bordered table-hover">
                 <tr>
                     <th>@lang('policy.table_head_one')</th>
                     <th>@lang('policy.table_head_two')</th>
@@ -88,91 +88,17 @@
         </div><!-- .container -->
     </div><!-- .home-page-icon-boxes -->
 
-    <div class="about-stats" style="margin: 50px">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="circular-progress-bar">
-                        <div class="circle" id="loader_1">
-                            <strong class="d-flex justify-content-center"></strong>
-                        </div>
-
-                        <h3 class="entry-title">Hard Work</h3>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="circular-progress-bar">
-                        <div class="circle" id="loader_2">
-                            <strong class="d-flex justify-content-center"></strong>
-                        </div>
-
-                        <h3 class="entry-title">Pure Love</h3>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="circular-progress-bar">
-                        <div class="circle" id="loader_3">
-                            <strong class="d-flex justify-content-center"></strong>
-                        </div>
-
-                        <h3 class="entry-title">Smart Ideas</h3>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="circular-progress-bar">
-                        <div class="circle" id="loader_4">
-                            <strong class="d-flex justify-content-center"></strong>
-                        </div>
-
-                        <h3 class="entry-title">Good Decisions</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="welcome-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-6 order-1 order-lg-1">
-                    <img src="{{asset('asset/')}}/images/welcome.jpg"  width="100%" alt="welcome">
-                </div><!-- .col -->
-
-                <div class="col-12 col-lg-6 order-2 order-lg-2">
-                    <div class="welcome-content">
-                        <header class="entry-header">
-                            <h2 class="entry-title" style="color: black">Wellcome to our Charity</h2>
-                        </header><!-- .entry-header -->
-
-                        <div class="entry-content mt-5">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestibulum mauris quis aliquam. Integer accumsan sodales odio, id tempus velit ullamcorper id. Quisque at erat eu libero consequat tempus. Quisque molestie convallis tempus. Ut semper purus metus, a euismod sapien sodales ac. Duis viverra eleifend fermentum.</p>
-                        </div><!-- .entry-content -->
-
-                        <div class="entry-footer mt-5">
-                            <a href="#" class="btn gradient-bg mr-2">Read More</a>
-                        </div><!-- .entry-footer -->
-                    </div><!-- .welcome-content -->
-                </div><!-- .col -->
-
-            </div><!-- .row -->
-        </div><!-- .container -->
-    </div><!-- .home-page-icon-boxes -->
-
     <div class="about-testimonial">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-5">
                     <div class="testimonial-cont">
                         <div class="entry-content">
-                            <p>সঞ্চয় করুন জীবন গড়ুন </p>
+                            <p>@lang('about.title') </p>
                         </div>
 
                         <div class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                            <img src="images/testimonial-1.jpg" alt="">
-
+                           <img src="{{asset("asset/images/olive.png")}}" alt="">
                             <h4>@lang('about.director_name'), <span>@lang('about.position')</span></h4>
                         </div>
                     </div>
@@ -181,12 +107,11 @@
                 <div class="col-12 col-md-6 offset-lg-2 col-lg-5">
                     <div class="testimonial-cont">
                         <div class="entry-content">
-                            <p>সঞ্চয়ের মাধ্যমে সুখী সমৃদ্ধ পরিবার গড়ে তুলুন </p>
+                            <p>@lang('about.dialogue')</p>
                         </div>
 
                         <div class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                            <img src="images/testimonial-2.jpg" alt="">
-
+                            <img src="{{asset("asset/images/olive.png")}}" alt="">
                             <h4>@lang('about.director_name'), <span>@lang('about.position')</span></h4>
                         </div>
                     </div>
@@ -199,9 +124,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
-                    <h2>Help us so we can help others</h2>
-
-                    <a class="btn orange-border" href="#">Donate now</a>
+                    <h2>We are Here to Help You!</h2>
                 </div>
             </div>
         </div>

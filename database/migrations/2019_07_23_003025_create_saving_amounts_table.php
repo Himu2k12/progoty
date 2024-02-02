@@ -20,6 +20,7 @@ class CreateSavingAmountsTable extends Migration
             $table->integer('field_man_id');
             $table->integer('amount');
             $table->integer('sheet_no');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

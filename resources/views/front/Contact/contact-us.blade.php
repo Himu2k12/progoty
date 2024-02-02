@@ -8,11 +8,19 @@
     <div class="contact-page-wrap">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-5">
+                <div class="col-sm-12 col-lg-7">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7183.547607804009!2d89.64517564183173!3d25.811035470921365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e2c8e400000001%3A0xe152c1173cf9ba33!2sNageshwari%20Pourashava!5e0!3m2!1sen!2sca!4v1677830549541!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    
+                    <div class="contact-gmap">
+                        <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=usa&key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes" allowfullscreen></iframe>
+                    </div>
+                
+                </div>
+                <div class="col-sm-12 col-lg-5">
                     <div class="entry-content">
-                        <h2>Get In touch with us</h2>
+                        <h2>@lang('contact.head')</h2>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris. Lorem ipsum dolor sit amet, conse ctetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. Integer accu msan sodales odio, id tempus velit ullamc.</p>
+                        <p></p>
 
                         <ul class="contact-social d-flex flex-wrap align-items-center">
                             <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
@@ -24,29 +32,13 @@
                         </ul>
 
                         <ul class="contact-info p-0">
-                            <li><i class="fa fa-phone"></i><span>+45 677 8993000 223</span></li>
-                            <li><i class="fa fa-envelope"></i><span>office@template.com</span></li>
-                            <li><i class="fa fa-map-marker"></i><span>Main Str. no 45-46, b3, 56832, Los Angeles, CA</span></li>
+                            <li><i class="fa fa-phone"></i><span>@lang('contact.mobile')</span></li>
+                            <li><i class="fa fa-envelope"></i><span>bdpssl@gmail.com /</span><span> Office@progatybd.com</span></li>
+                            <li><i class="fa fa-map-marker"></i><span>@lang('contact.address')</span></li>
                         </ul>
                     </div>
                 </div><!-- .col -->
 
-                <div class="col-12 col-lg-7">
-                    <form class="contact-form">
-                        <input type="text" placeholder="Name">
-                        <input type="email" placeholder="Email">
-                        <textarea rows="15" cols="6" placeholder="Messages"></textarea>
-
-                        <span>
-                            <input class="btn gradient-bg" type="submit" value="Contact us">
-                        </span>
-                    </form><!-- .contact-form -->
-
-                </div><!-- .col -->
-
-                <div class="col-12">
-                    <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=newashi%20&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.crocothemes.net">crocothemes.net</a></div><style>.mapouter{text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>
-                </div>
             </div><!-- .row -->
         </div><!-- .container -->
     </div>

@@ -17,7 +17,7 @@ class SavingsAccountInfo extends Model
     {
         return [
             'slug' => [
-                'source' => 'national_id'
+                'source' => 'applicant_name'
             ]
         ];
     }
@@ -26,5 +26,17 @@ class SavingsAccountInfo extends Model
             ->where('id',$id)
             ->select('upazila_name');
 
+    }
+    public function ApplicantName($id){
+        return DB::table('savings_account_infos')
+            ->select('id','applicant_name','mobile')
+            ->where('id','=',$id)
+            ->first();
+    }
+    public function accountInfo($id){
+        return DB::table('savings_account_infos')
+            ->select('*')
+            ->where('id','=',$id)
+            ->first();
     }
 }

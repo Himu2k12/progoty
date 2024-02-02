@@ -4,9 +4,9 @@
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="foot-about">
-                        <h2><a class="foot-logo" href="#"><img src="{{asset('asset/')}}/images/foot-logo.png" alt=""></a></h2>
+                        <h2 style="text-align: center"><a class="foot-logo" href="#"><img src="{{asset('asset/')}}/images/logo.png" width="70px" alt="kllll"></a></h2>
 
-                        <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
+                        <p></p>
 
                         <ul class="d-flex flex-wrap align-items-center">
                             <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
@@ -15,55 +15,48 @@
                             <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                             <li><a href="#"><i class="fa fa-behance"></i></a></li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+
                         </ul>
                     </div><!-- .foot-about -->
                 </div><!-- .col -->
 
                 <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-                    <h2>Useful Links</h2>
+                    <h2>@lang('footer.link')</h2>
 
                     <ul>
-                        <li><a href="#">Privacy Polticy</a></li>
-                        <li><a href="#">Become  a Volunteer</a></li>
-                        <li><a href="#">Donate</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                        <li><a href="#">Causes</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">News</a></li>
+                        <li><a href="{{url('/about')}}"></a>@lang('footer.about_us')</li>
+                        <li><a href="{{url('/policy')}}">@lang('footer.policy')</a></li>
+                        <li><a href="{{url('/contact')}}">@lang('footer.contact_us')</a></li>
+                        <li><a href="{{url('/')}}#Events">@lang('footer.events')</a></li>
+                        <li><a href="{{url('/')}}#OurTeam">@lang('footer.team')</a></li>
                     </ul>
                 </div><!-- .col -->
 
                 <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
                     <div class="foot-latest-news">
-                        <h2>Latest News</h2>
+                        <h2>@lang('footer.upcoming_events')</h2>
 
                         <ul>
+                            @if(isset($events))
+                            @foreach($events as $item)
                             <li>
-                                <h3><a href="#">A new cause to help</a></h3>
-                                <div class="posted-date">MArch 12, 2018</div>
+                                <h3><a href="#">{{$item->heading}}</a></h3>
+                                <div class="posted-date">{{$item->date}}</div>
                             </li>
-
-                            <li>
-                                <h3><a href="#">We love to help people</a></h3>
-                                <div class="posted-date">MArch 12, 2018</div>
-                            </li>
-
-                            <li>
-                                <h3><a href="#">The new ideas for helping</a></h3>
-                                <div class="posted-date">MArch 12, 2018</div>
-                            </li>
+                                @endforeach
+                                @endif
                         </ul>
                     </div><!-- .foot-latest-news -->
                 </div><!-- .col -->
 
                 <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
                     <div class="foot-contact">
-                        <h2>Contact</h2>
+                        <h2>@lang('footer.contact_header')</h2>
 
                         <ul>
-                            <li><i class="fa fa-phone"></i><span>+45 677 8993000 223</span></li>
-                            <li><i class="fa fa-envelope"></i><span>office@template.com</span></li>
-                            <li><i class="fa fa-map-marker"></i><span>Main Str. no 45-46, b3, 56832, Los Angeles, CA</span></li>
+                            <li><i class="fa fa-phone"></i><span> @lang('contact.mobile')</span></li>
+                            <li><i class="fa fa-envelope"></i><span>bdpssl@gmail.com</span></li>
+                            <li><i class="fa fa-map-marker"></i><span>@lang('contact.address')</span></li>
                         </ul>
                     </div><!-- .foot-contact -->
 
@@ -83,7 +76,7 @@
             <div class="row">
                 <div class="col-12">
                     <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> Progaty
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                 </div><!-- .col-12 -->
             </div><!-- .row -->

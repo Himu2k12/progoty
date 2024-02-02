@@ -6,9 +6,24 @@
 <script type='text/javascript' src='{{asset('asset/')}}/js/jquery.countTo.min.js'></script>
 <script type='text/javascript' src='{{asset('asset/')}}/js/jquery.barfiller.js'></script>
 <script type='text/javascript' src='{{asset('asset/')}}/js/custom.js'></script>
+
 <script>
 
 
+    function readURLNominee(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#nominee')
+                    .attr('src', e.target.result)
+                    .width(400)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -23,21 +38,36 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     function readURL2(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#signature')
+                $('#nid')
                     .attr('src', e.target.result)
-                    .width(150)
+                    .width(400)
                     .height(200);
             };
 
             reader.readAsDataURL(input.files[0]);
         }
     }
+    function signature(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#signatu')
+                    .attr('src', e.target.result)
+                    .width(300)
+                    .height(80);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
     function myFunction() {
         var x=document.getElementById("present_dist").value;
         var y=document.getElementById("present_upazila").value;
@@ -198,6 +228,17 @@
             document.getElementById("husband_name").innerHTML="required";
         }
     }
+    function validateMobile() {
+        var  name = document.getElementById("mobile");
+
+        if (!name.checkValidity()) {
+            document.getElementById("error_mobile").innerHTML = name.validationMessage;
+            document.getElementById("mobile").style.borderColor = "red";
+        }else{
+            document.getElementById("error_mobile").innerHTML="";
+            document.getElementById("mobile").style.borderColor = "green";
+        }
+    }
     function getNomineeInfo(){
         var id=$('#accountID').val();
 
@@ -214,6 +255,7 @@
             console.log(data.name.applicant_name);
 
             document.getElementById("amountOfSavings").value =data.amount;
+            document.getElementById("amountOfSavings1").value =data.amount;
             document.getElementById("nomineeName").value =data.name.applicant_name;
         });
 
@@ -235,11 +277,32 @@
             console.log(data.name.applicant_name);
 
             document.getElementById("amountOfSavings2").value =data.amount;
+            document.getElementById("amountOfSavings21").value =data.amount;
             document.getElementById("nomineeName2").value =data.name.applicant_name;
         });
 
     }
-    
+
+    function GetSumOfApplicant(){
+        var id=$('#accountNo').val();
+
+        $.ajax({
+
+            type: 'POST',
+            url: '{{url('/get-amount-by-id')}}',
+            data: {mid:id,"_token":"{{csrf_token()}}"}
+
+
+        }).done(function(data) {
+
+            console.log(data);
+            document.getElementById("saving").value =data['money'];
+            document.getElementById("account_name").value =data['account_name'];
+            document.getElementById("prevloan").value =data['prevloan'];
+        });
+
+    }
+
 </script>
 
 </body>

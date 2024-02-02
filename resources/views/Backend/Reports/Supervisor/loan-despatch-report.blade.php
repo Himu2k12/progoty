@@ -1,0 +1,190 @@
+@extends('Backend.master')
+
+@section('title')
+    Loan Dispatches
+@endsection
+@section('content')
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <div class="col-lg-12">
+            <div class="card mb-4 py-3 border-bottom-info">
+                <div class="card-body" style="text-align: center">
+                    <h4 style="text-align: center">Loan Dispatch Reports</h4>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <input type="checkbox" @if(isset($check)) {{$check}} @endif id="checkbox"> Single Day Report
+            </div>
+        </div>
+        <!-- Page Heading -->
+        <div class="card shadow mb-4" id="fromTo">
+            <div class="card-header py-3">
+                <form action="{{url('Loan-dispatch-report')}}"  method="get">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-1" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <label for="exampleInputEmail1"><b>From</b></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <input type="date" onfocusout="checkDate()" class="form-control" id="From" name="from" required @if(isset($from)) value="{{$from}}"@else Date @endif>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-1" style="margin: auto;">
+                            <div class="form-group" style="text-align: center;margin: auto;">
+                                <label for="exampleInputEmail1"><b>To</b></label>
+                            </div>
+                        </div><!-- modal-body -->
+
+                        <div class="col-sm-4" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <input type="date" class="form-control" id="to" aria-describedby="emailHelp"  name="to" required @if(isset($to)) value="{{$to}}" @else Date @endif>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+
+                                <button type="submit" class="form-control btn btn-info">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card shadow mb-4" id="daily" >
+            <div class="card-header py-3">
+                <form action="{{url('daily-loan-dispatch-reports')}}" method="get">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-1" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <label for="exampleInputEmail1"><b>Date</b></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <input type="date" class="form-control" name="date"  @if(isset($from)) value="{{$from}}"@endif required>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="margin: auto">
+                            <div class="form-group" style="margin: auto">
+                                <button type="submit" class="form-control btn btn-info">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @if(isset($loanDispatches) && !$loanDispatches->isEmpty())
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h5 style="text-align: center" class="m-0 font-weight-bold text-primary">Loan Dispatches From {{$from}}@if(isset($to)) to {{$to}}@endif</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead style="">
+                            <tr style="font-size: .85rem">
+                                <th>ID</th>
+                                <th>Dispatch Date</th>
+                                <th>Applicant Name & No</th>
+                                <th>Dispatch Amount</th>
+                                <th>Service charge</th>
+                                <th>Cashier Note</th>
+                                <th>Cashier ID</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: .80rem">
+                            <?php
+                            $totalCost=0;
+                            $totalService=0;
+                            ?>
+
+                            @foreach($loanDispatches as $data)
+                                <tr>
+                                    <td>{{$data->id}}</td>
+                                    <td>{{$data->dispatch_date}}</td>
+                                    <td>{!! $data->applicant_name !!}({{$data->account_no}})</td>
+                                    <td>{{$data->loan_amount}}</td>
+                                    <td>{{$data->service_charge}}%</td>
+                                    <td>{{$data->note}}</td>
+                                    <td>{{$data->cashier_id}}</td>
+                                </tr>
+                                <?php $totalCost+=$data->loan_amount;   ?>
+
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <tr style="">
+                                <th colspan="3" style="text-align: right">Total</th>
+                                <th>{{$totalCost}}</th>
+                                <th colspan="3"></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        @if(isset($to) && isset($from))
+                            <form style="text-align:center" action="{{url('generate-pdf-for-loan-dispatch')}}" method="get" target="_blank">
+                                @csrf
+                                <input type="hidden" name="from" @if(isset($from)) value="{{$from}}" @endif>
+                                <input type="hidden" name="to" @if(isset($to)) value="{{$to}}" @endif>
+                                <button type="submit" class="btn btn-info btn-lg">Print</button>
+                            </form>
+                        @else
+                            <form style="text-align:center" action="{{url('daily-generate-pdf-for-loan-dispatch')}}" method="get" target="_blank">
+                                @csrf
+                                <input type="hidden" name="from" @if(isset($from)) value="{{$from}}" @endif>
+                                <button type="submit" class="btn btn-success btn-lg">Print</button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @else
+            @if(isset($from) && isset($to))
+                <div class="card-header py-3">
+                    <h6 style="text-align: center" class="m-0 font-weight-bold text-danger">No Loan Dispatch From {{$from}} to {{$to}}</h6>
+                </div>
+        @endif
+    @endif
+    <!-- DataTales Example -->
+        <script>
+            @if(isset($check))
+
+            $("#daily").show() ;
+            $("#fromTo").hide()
+            @else
+            $( window ).on( "load",  $("#daily").hide() );
+            @endif
+            $("#checkbox").change(function() {
+                if(this.checked) {
+
+                    $("#daily").show()
+                    $("#fromTo").hide()
+                }else{
+                    $("#daily").hide()
+                    $("#fromTo").show()
+                }
+            });
+        </script>
+    </div>
+    <!-- /.container-fluid -->
+
+@endsection
+

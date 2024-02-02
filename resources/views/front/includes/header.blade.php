@@ -2,7 +2,7 @@
 <html lang="{{app()->getLocale()}}">
 <head>
     <title>@yield('title')</title>
-
+    <link rel="progoty icon" href="{{asset('asset/')}}/images/logo.png">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,13 +21,16 @@
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="{{asset('asset/')}}/css/swiper.min.css">
+    @yield('addStyle')
+
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('asset/')}}/style.css">
     <link rel="stylesheet" href="{{asset('sty/')}}/css/custom.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="site-header">
@@ -36,11 +39,11 @@
             <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-lg-center">
                 <div class="col-12 col-lg-8 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                     <div class="header-bar-email">
-                        @lang('navbar.mail'): <a href="#">bdpssl@gmail.com</a>
+                        @lang('navbar.mail'): <a href="#">bdpssl@gmail.com</a><a href="#">/ Office@progatybd.com</a>
                     </div><!-- .header-bar-email -->
 
                     <div class="header-bar-text">
-                        <p>@lang('navbar.top_phone'): <span>+8801718910757 / +8801724674461</span></p>
+                        <p>@lang('navbar.top_phone'): <span>+8801753161111 / +8801724674461</span></p>
                     </div><!-- .header-bar-text -->
                 </div><!-- .col -->
 

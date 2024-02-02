@@ -65,7 +65,7 @@
 
                             <div class="col-md-6" >
                                <select class="form-control" name="role">
-                                   @foreach(\App\Role::where('access','=',1)->get() as $roles)
+                                   @foreach(\App\Role::where('access','=',1)->where('id','!=',1)->get() as $roles)
                                    <option value="{{$roles->id}}">{{$roles->role}}</option>
                                        @endforeach
                                </select>

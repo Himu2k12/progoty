@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\SavingsAccountInfo::class, 5000)->create();
+       factory(App\SavingsAccountInfo::class, 5000)->create();
+        //factory(\App\LoanApplication::class,100)->create();
     }
 }

@@ -10,16 +10,22 @@
     <div class="welcome-wrap">
         <div class="container">
             <div class="row">
-
                 <div class=" col-sm-12">
-
                     <div class="alert alert-success"><h4 style="text-align: center">Loan Application Form (ঋণ আবেদন ফর্ম)</h4></div>
                     <div class="" style="border: 1px solid #CDCCCC; padding: 30px">
                         <div class="alert alert-primary" style="padding: 10px"><p style="text-align: center; color: black;font-size: 12px">All information should be filled up in English (সকল তথ্য অবশ্যই ইংরেজীতে পূরন করতে হবে)</div>
-                        <div class="alert alert-danger" style="padding: 10px; text-align: center"><p style="color: black;font-size: 13px">Fields marked with <span style="color: red">*</span> are mandatory. (লাল <span style="color: red">*</span> তারকা চিহ্নিত ঘরের তথ্যগুলো পূরন করা আবশ্যক)<br>Fields marked with  <span style="color: green">*</span> are required any of them.  (সবুজ <span style="color: green">*</span> তারকা চিহ্নিত ঘরের তথ্যগুলো যে কোন একটি পূরণ করা আবশ্যক, আপনি চাইলে উভয় ঘরের তথ্য দিতে পারেন)</p></div>
-                       @if((Session::get('mass')!==null))
-                        <div class="alert alert-success" style="padding: 10px; text-align: center">{{Session::get('mass')}}</div>
+                        <div class="alert alert-primary" style="padding: 10px; text-align: center"><p style="color: black;font-size: 12px">Fields marked with <span style="color: red">*</span> are mandatory. (লাল <span style="color: red">*</span> তারকা চিহ্নিত ঘরের তথ্যগুলো পূরন করা আবশ্যক)<br>Fields marked with  <span style="color: green">*</span> are required any of them.  (সবুজ <span style="color: green">*</span> তারকা চিহ্নিত ঘরের তথ্যগুলো যে কোন একটি পূরণ করা আবশ্যক, আপনি চাইলে উভয় ঘরের তথ্য দিতে পারেন)</p></div>
+
+                        @if($errors->any())
+                            <div class="alert alert-danger" style="font-size: 20px;padding: 10px; color:red; text-align: center"><b>Loan Application Not Submitted!Please Check all Fields</b></div>
                         @endif
+                        @if((Session::get('mass')!==null))
+                        <div class="alert alert-success" style="font-size: 20px; padding: 10px; text-align: center">{{Session::get('mass')}}</div>
+                        @endif
+                        @if((Session::get('mess')!==null))
+                            <div class="alert alert-danger" style="padding: 10px; text-align: center">{{Session::get('mess')}}</div>
+                        @endif
+                        <input readonly style="text-align:center; color:red" id="prevloan" type="text" class="form-control" >
                             <form enctype="multipart/form-data" name="newMember" action="{{url('/create-loan')}}" method="post">
                             {{csrf_field()}}
                             <div class="row">
@@ -28,18 +34,39 @@
                                         <legend class="legend_border">Account information (হিসাবের তথ্য)</legend>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Account No<span style="color: red">*</span> ( হিসাব নং)</label>
-                                            <select class="form-control" name="account_no" style="height:34px;">
-                                                <option value="">select one</option>
-                                                @foreach($accountNumber as $item)
-                                                <option value="{{$item->id}}">{{$item->applicant_name}}({{$item->id}})</option>
-                                                    @endforeach
-                                            </select>
+                                            <input name="account_no"  class="form-control" type="number" onchange="GetSumOfApplicant()" id="accountNo" required>
+{{--                                            <select required id="accountNo" onchange="GetSumOfApplicant()" class="form-control" name="account_no" style="height:34px;">--}}
+{{--                                                <option  value="">select one</option>--}}
+{{--                                                @foreach($accountNumber as $item)--}}
+{{--                                                <option value="{{$item->id}}">{{$name->ApplicantName($item->id)->applicant_name}}({{$item->id}})</option>--}}
+{{--                                                    @endforeach--}}
+{{--                                            </select>--}}
                                             <span  id="account_no" style="color: red;">{{ $errors->has('account_no') ? $errors->first('account_no') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
+                                            <label class="required">Applicant Name<span style="color: red">*</span> (আবেদনকারীর নাম)</label>
+
+                                            <span  id="loan_amount" style="color: red;">                                            <input readonly id="account_name" type="text" class="form-control" >
+                                        
+                                        </div>
+                                        <div class="col-sm-6" style=" margin-bottom: 20px">
+                                            <label class="required">Form Fee<span style="color: red">*</span> (ফর্ম মূল্য)</label>
+                                            <input id="form_fee" type="number" class="form-control" name="form_fee" value="{{old('form_fee')}}" step="2" min="0" max="3000">
+                                            <span  id="form_fee" style="color: red;">{{ $errors->has('form_fee') ? $errors->first('form_fee') : ' ' }}</span>
+                                        </div>
+                                        <div class="col-sm-6" style=" margin-bottom: 20px">
+                                            <label class="required">Form Fee Collection Sector<span style="color: red">*</span> (সংগ্রহ খাত)</label>
+                                            <select class="form-control" required name="collection_category" style="height:34px;">
+                                                <option value=""> select One </option>
+                                                @foreach($collectionSector as $collection)
+                                                    <option value="{{$collection->id}}">{{$collection->category}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Amount of Savings<span style="color: red">*</span> (সঞ্চয়ের পরিমান)</label>
-                                            <input type="number" class="form-control" name="loan_amount" value="{{old('amount_of_money')}}" step="1">
-                                            <span  id="loan_amount" style="color: red;">{{ $errors->has('loan_amount') ? $errors->first('loan_amount') : ' ' }}</span>
+                                            <input readonly id="saving" type="number" class="form-control" name="total_deposite" min=1 value="{{old('total_deposite')}}" step="1">
+                                            <span  id="loan_amount" style="color: red;">{{ $errors->has('total_deposite') ? $errors->first('total_deposite') : ' ' }}</span>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -48,13 +75,13 @@
                                         <legend class="legend_border">Loan information (হিসাবের তথ্য)</legend>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Loan Application Amount<span style="color: red">*</span> (ঋণ আবেদনের পরিমান)</label>
-                                            <input type="number" class="form-control" name="form_fee" value="{{old('form_fee')}}">
-                                            <span  id="error_form_fee" style="color: red;">{{ $errors->has('form_fee') ? $errors->first('form_fee') : ' ' }}</span>
+                                            <input type="number" required class="form-control" name="loan_amount" value="{{old('loan_amount')}}">
+                                            <span  id="error_loan_amount" style="color: red;">{{ $errors->has('loan_amount') ? $errors->first('loan_amount') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Application Date<span style="color: red">*</span> (ঋণ আবেদনের তারিখ)</label>
-                                            <input type="date" id="datefield" class="form-control" name="application_date" value="{{old('form_fee')}}" >
-                                            <span  id="error_form_fee" style="color: red;">{{ $errors->has('form_fee') ? $errors->first('form_fee') : ' ' }}</span>
+                                            <input type="date" required  id="datefield" class="form-control" name="application_date" value="{{old('application_date')}}" >
+                                            <span  id="error_form_fee" style="color: red;">{{ $errors->has('application_date') ? $errors->first('application_date') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-12" style=" margin-bottom: 20px">
                                             <input type='checkbox' required /> Therefore, for the benefit of my business,
@@ -72,32 +99,32 @@
                                         <legend class="legend_border">Present Address (বর্তমান ঠিকানা)</legend>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">District<span style="color: red">*</span> (জেলা)</label>
-                                            <input class="form-control" id="present_dist" name="present_district" value="{{old('present_district')}}" style="height:34px;"/>
+                                            <input required class="form-control" id="present_dist" name="present_district" value="{{old('present_district')}}" style="height:34px;"/>
 
                                             <span  id="error_present_dist" style="color: red;">{{ $errors->has('present_district') ? $errors->first('present_district') : ' ' }}</span>
 
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Thana/Upazila<span style="color: red">*</span> (থানা/উপজেলা)</label>
-                                            <input class="form-control" id="present_upazila" name="present_thana" value="{{old('present_thana')}}" style="height:34px;"/>
+                                            <input required class="form-control" id="present_upazila" name="present_thana" value="{{old('present_thana')}}" style="height:34px;"/>
                                             <span  id="present_thana" style="color: red;">{{ $errors->has('present_thana') ? $errors->first('present_thana') : ' ' }}</span>
 
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Post Code <span style="color: red">*</span>(পোস্ট কোড)</label>
-                                            <input type="number" id="present_post_code" class="form-control" name="present_post_code" value="{{old('present_post_code')}}">
+                                            <input required type="number" id="present_post_code" class="form-control" name="present_post_code" value="{{old('present_post_code')}}">
                                             <span  id="error_present_post_code" style="color: red;">{{ $errors->has('present_post_code') ? $errors->first('present_post_code') : ' ' }}</span>
 
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Village/Road No/House No/Address<span style="color: red">*</span> (গ্রাম/রোড নং/বাড়ি নং/ঠিকানা)</label>
-                                            <input type="text" id="present_village" class="form-control" name="present_village" value="{{old('present_village')}}">
+                                            <input required type="text" id="present_village" class="form-control" name="present_village" value="{{old('present_village')}}">
                                             <span  id="error_present_village" style="color: red;">{{ $errors->has('present_village') ? $errors->first('present_village') : ' ' }}</span>
 
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Mobile No<span style="color: red">*</span> (ফোন নাম্বার )</label>
-                                            <input type="text" id="mobile" class="form-control" name="mobile_one" value="{{old('mobile_one')}}">
+                                            <input required type="text" id="mobile" class="form-control" name="mobile_one" value="{{old('mobile_one')}}">
                                             <span  id="mobile" style="color: red;">{{ $errors->has('mobile_one') ? $errors->first('mobile_one') : ' ' }}</span>
 
                                         </div>
@@ -105,7 +132,6 @@
                                             <label class="required">Mobile No 2 (ফোন নাম্বার 2)</label>
                                             <input type="text" id="mobile2" class="form-control" name="mobile_two" value="{{old('mobile2')}}">
                                             <span  id="mobile2" style="color: red;">{{ $errors->has('mobile') ? $errors->first('mobile2') : ' ' }}</span>
-
                                         </div>
                                     </fieldset>
                                 </div>
@@ -113,19 +139,20 @@
                                     <fieldset class="field_border">
                                         <legend class="legend_border">Nominee Info 1 (মনোনীত ব্যক্তির তথ্য)</legend>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
-                                            <label class="required">Account No<span style="color: red">*</span>(সম্পর্ক)</label>
-                                            <input  type="number" onchange="getNomineeInfo()" id="accountID" class="form-control" name="nominee_account_1" value="{{old('account_no')}}">
-                                            <span  id="error_account_no" style="color: red;">{{ $errors->has('account_no') ? $errors->first('account_no') : ' ' }}</span>
+                                            <label class="required">Account No<span style="color: red">*</span>(হিসাব নাম্বার)</label>
+                                            <input required  type="number" onchange="getNomineeInfo()" id="accountID" class="form-control" name="nominee_account_1" value="{{old('account_no')}}">
+                                            <span  id="error_account_no" style="color: red;">{{ $errors->has('nominee_account_1') ? $errors->first('nominee_account_1') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Amount of Savings<span style="color: red">*</span> (সঞ্চয়ের পরিমান)</label>
-                                            <input readonly type="text" id="amountOfSavings" class="form-control" name="amount_of_money" value="{{old('amount_of_money')}}" step="1">
+                                            <input readonly type="text" id="amountOfSavings" class="form-control" value="{{old('savings_amount_1')}}" step="1">
+                                            <input type="hidden" id="amountOfSavings1" name="savings_amount_1">
                                             <span  id="error_amount_of_money" style="color: red;">{{ $errors->has('amount_of_money') ? $errors->first('amount_of_money') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
-                                            <label class="required">Mobile Number<span style="color: red">*</span> (মনোনীত ব্যক্তির নাম)</label>
-                                            <input type="text" id="mobileNum1" class="form-control" name="nominee_name2" value="{{old('nominee_name')}}">
-                                            <span  id="error_nominee_name" style="color: red;">{{ $errors->has('nominee_name') ? $errors->first('nominee_name') : ' ' }}</span>
+                                            <label class="required">Mobile Number<span style="color: red">*</span> (মনোনীত ব্যক্তির মোবাইল নাম্বার)</label>
+                                            <input required type="text" id="mobileNum1" class="form-control" name="nominee_mob_1" value="{{old('nominee_mob_1')}}">
+                                            <span  id="error_nominee_name" style="color: red;">{{ $errors->has('nominee_mob_1') ? $errors->first('nominee_mob_1') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Nominee Name<span style="color: red">*</span> (মনোনীত ব্যক্তির নাম)</label>
@@ -139,24 +166,25 @@
                                     <fieldset class="field_border">
                                         <legend class="legend_border">Nominee Info 2 (মনোনীত ব্যক্তির তথ্য)</legend>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
-                                            <label class="required">Account No<span style="color: red">*</span>(সম্পর্ক)</label>
-                                            <input  type="number" onchange="getNomineeInfo2()" id="accountID2" class="form-control" name="nominee_account_2" value="{{old('account_no')}}">
-                                            <span  id="error_account_no" style="color: red;">{{ $errors->has('account_no') ? $errors->first('account_no') : ' ' }}</span>
+                                            <label class="required">Account No<span style="color: red">*</span>(হিসাব নাম্বার)</label>
+                                            <input required  type="number" onchange="getNomineeInfo2()" id="accountID2" class="form-control" name="nominee_account_2" value="{{old('account_no')}}">
+                                            <span  id="error_account_no" style="color: red;">{{ $errors->has('nominee_account_2') ? $errors->first('nominee_account_2') : ' ' }}</span>
 
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Amount of Savings<span style="color: red">*</span> (সঞ্চয়ের পরিমান)</label>
-                                            <input readonly type="text" id="amountOfSavings2" class="form-control" name="amount_of_money" value="{{old('amount_of_money')}}" step="1">
+                                            <input readonly type="text" id="amountOfSavings2" class="form-control"  value="{{old('amount_of_money')}}" step="1">
+                                            <input type="hidden" id="amountOfSavings21" name="savings_amount_2" name="savings_amount_2">
                                             <span  id="error_amount_of_money" style="color: red;">{{ $errors->has('amount_of_money') ? $errors->first('amount_of_money') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
-                                            <label class="required">Mobile Number<span style="color: red">*</span> (মনোনীত ব্যক্তির নাম)</label>
-                                            <input type="text" id="mobileNum2" class="form-control" name="nominee_name2" value="{{old('nominee_name')}}">
-                                            <span  id="error_nominee_name" style="color: red;">{{ $errors->has('nominee_name') ? $errors->first('nominee_name') : ' ' }}</span>
+                                            <label class="required">Mobile Number<span style="color: red">*</span> (মনোনীত ব্যক্তির মোবাইল নাম্বার)</label>
+                                            <input required type="text" id="mobileNum2" class="form-control" name="nominee_mobile_2" value="{{old('nominee_mobile_2')}}">
+                                            <span  id="error_nominee_name" style="color: red;">{{ $errors->has('nominee_mobile_2') ? $errors->first('nominee_mobile_2') : ' ' }}</span>
                                         </div>
                                         <div class="col-sm-6" style=" margin-bottom: 20px">
                                             <label class="required">Nominee Name<span style="color: red">*</span> (মনোনীত ব্যক্তির নাম)</label>
-                                            <input readonly type="text" id="nomineeName2" class="form-control" name="nominee_name2" value="{{old('nominee_name')}}">
+                                            <input readonly type="text" id="nomineeName2" class="form-control">
                                             <span  id="error_nominee_name" style="color: red;">{{ $errors->has('nominee_name') ? $errors->first('nominee_name') : ' ' }}</span>
                                         </div>
 

@@ -3,12 +3,12 @@
 @section('content')
 
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('{{asset('/sty/')}}/images/bg-01.jpg');">
+        <div class="container-login100" style="background-image: url('{{asset('/sty/')}}/images/login_page.JPG');">
             <div class="wrap-login100">
                 <form class="login100-form validate-form"  method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
                     <span class="login100-form-logo">
-						<i class="zmdi zmdi-landscape"></i>
+						<img src="{{asset('/asset/images/logo_menu.jpg')}}" width="60%">
 					</span>
 
                     <span class="login100-form-title p-b-34 p-t-27">

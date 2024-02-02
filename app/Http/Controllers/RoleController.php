@@ -17,12 +17,9 @@ class RoleController extends Controller
         if(!Gate::allows('isSuper')){
             abort('404','you cannot access here');
         }
-        $roles=DB::table('roles')
-            ->where('access','=',1)
-            ->orWhere('access','=',0)
-            ->get();
+        $roles=Role::all();
 
-        return view('back.role.add-role',['roles'=>$roles]);
+        return view('Backend.SuperAdmin.role.add-role',['roles'=>$roles]);
     }
     public function addRole(Request $request){
         $this->validate($request, [
@@ -51,7 +48,7 @@ class RoleController extends Controller
     }
     public function editRoleInfo($id) {
         $editById = Role::find($id);
-        return view('back.role.edit-role', ['editById'=>$editById]);
+        return view('Backend.SuperAdmin.role.edit-role', ['editById'=>$editById]);
     }
 
     public function updateRoleInfo(Request $request){

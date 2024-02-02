@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
+  <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Progoty</title>
+    <link rel="icon"  type="image/jpg" href="{{asset('asset/')}}/images/logo.jpg">
+
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,7 +19,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{asset('/')}}/sty/images/icons/favicon.ico"/>
     <!--===============================================================================================-->
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{asset('/')}}/sty/fonts/iconic/css/material-design-iconic-font.min.css">
